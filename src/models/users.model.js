@@ -17,13 +17,14 @@ const userSchema=new mongoose.Schema({
     password:{
         type:String,
         required:[true,"Password is required"],
-        minlength:[6,"Password must be more than 6 character"]
+        minlength:[6,"Password must be more than 6 character"],
+        select:false
     },
 },{
-    timestamp:true
+    timestamps:true
 })
 
-userSchema.pre("save",async (next) =>{
+userSchema.pre("save",async function (next){
     if(!this.isModified("password")){
         return next()
     }
@@ -32,7 +33,7 @@ userSchema.pre("save",async (next) =>{
     next()
 })
 
-userSchema.methods.comparePassword=async (password)=>{
+userSchema.methods.comparePassword=async function (password){
     return await bcrypt.compare(password,this.password)
 }
 const userModel=mongoose.model("user",userSchema)
