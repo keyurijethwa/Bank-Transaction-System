@@ -3,4 +3,7 @@ const authController=require('../controllers/auth.controller')
 
 const router=express.Router()
 
-router.get('/api/auth',authController)
+/* POST /api/auth/register */
+router.post('/register',authController)
+
+module.exports=router
