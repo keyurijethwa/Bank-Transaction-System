@@ -49,3 +49,5 @@ ledgerSchema.pre("replaceOne",preventLedgerModification)
 ledgerSchema.pre("update",preventLedgerModification)
 
 const ledgerModel=mongoose.model("ledger",ledgerSchema)
+
+module.exports=ledgerModel
