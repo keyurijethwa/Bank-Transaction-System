@@ -1,6 +1,7 @@
 const { model } = require('mongoose')
 const userModel=require('../models/users.model')
 const jwt=require('jsonwebtoken')
+const blacklistModel=require('../models/blackList.model')
 
 
 async function authMiddleware(req,res,next){
@@ -9,6 +10,16 @@ async function authMiddleware(req,res,next){
     if(!token){
         return res.status(401).json({
             message:"Unauthorized access, token is missing"
+        })
+    }
+
+    const isBlacklisted=await blacklistModel.findOne({
+        token:token
+    })
+
+    if(isBlacklisted){
+        return res.status(401).json({
+            message:"Unauthorized access, token is blacklisted"
         })
     }
 
@@ -37,6 +48,16 @@ async function authSystemUserMiddleware(req,res,next){
             message:"Unauthorized access, token is missing"
         })
     }
+    
+    const isBlacklisted=await blacklistModel.findOne({
+        token:token
+    })
+
+    if(isBlacklisted){
+        return res.status(401).json({
+            message:"Unauthorized access, token is blacklisted"
+        })
+     }
 
     try {
         
