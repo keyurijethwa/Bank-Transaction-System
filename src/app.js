@@ -13,6 +13,12 @@ const authRouter=require('./routes/auth.route')
 const accountRouter=require('./routes/account.route')
 const transactionRouter=require('./routes/transaction.route')
 
+app.get('/',(req,res)=>{
+    res.status(200).json({
+        message:"Welcome to Bank Transaction API"
+    })
+})
+
 /**
  * - API Routes
  */
